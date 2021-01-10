@@ -4,7 +4,7 @@
 #include <Windows.h>
 
 void MenuButton::btnCallback(CCObject* pSender) {
-	Layer* l = Layer::create();
+	Layer* layer = Layer::create();
 }
 
 bool __fastcall MenuLayer::initHook(CCLayer* self) {
@@ -26,13 +26,9 @@ bool __fastcall MenuLayer::initHook(CCLayer* self) {
 
 	bottomMenu->removeChild(chestBtn, false);
 	
-	auto menu = CCMenu::createWithItem(chestBtn);
-
-	menu->setPositionY(45);
-
 	bottomMenu->alignItemsHorizontallyWithPadding(5.0f);
 
-	self->addChild(menu, 100);
+	bottomMenu->addChild(chestBtn);
 
 	return result;
 }
