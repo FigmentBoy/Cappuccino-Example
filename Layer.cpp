@@ -1,7 +1,6 @@
 #include "Layer.h"
 #include "MenuLayer.h"
 #include "CCDirectorModified.h"
-#include <WinUser.h>
 
 bool Layer::init() {
 	CCDirector* director = CCDirector::sharedDirector();
@@ -19,17 +18,19 @@ bool Layer::init() {
 	addChild(menu);
 	addChild(label);
 
-	auto transition = CCTransitionFade::create(0.5f, this);
+	CCScene* wrapperScene = CCScene::create();
 
-	schedule((SEL_SCHEDULE)(&Layer::update), 0);
+	wrapperScene->addChild(this);
+
+	auto transition = CCTransitionFade::create(0.5f, wrapperScene);
+	
+	this->setKeypadEnabled(true);
 
 	return director->pushScene(transition);
 }
 
-void Layer::update(float idk) {
-	if (GetAsyncKeyState(VK_ESCAPE)) {
-		Layer::returnToMenu(nullptr);
-	}
+void Layer::keyBackClicked(void) {
+	Layer::returnToMenu(nullptr);
 }
 
 void Layer::returnToMenu(CCObject* pSender) {
