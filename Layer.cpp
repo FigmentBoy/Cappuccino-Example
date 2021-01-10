@@ -1,6 +1,7 @@
 #include "Layer.h"
 #include "MenuLayer.h"
 #include "CCDirectorModified.h"
+#include <WinUser.h>
 
 bool Layer::init() {
 	CCDirector* director = CCDirector::sharedDirector();
@@ -20,8 +21,15 @@ bool Layer::init() {
 
 	auto transition = CCTransitionFade::create(0.5f, this);
 
-	
+	schedule((SEL_SCHEDULE)(&Layer::update), 0);
+
 	return director->pushScene(transition);
+}
+
+void Layer::update(float idk) {
+	if (GetAsyncKeyState(VK_ESCAPE)) {
+		Layer::returnToMenu(nullptr);
+	}
 }
 
 void Layer::returnToMenu(CCObject* pSender) {

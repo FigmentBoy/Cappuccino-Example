@@ -7,8 +7,6 @@ namespace MenuLayer {
     inline bool(__thiscall* init)(CCLayer* self);
     bool __fastcall initHook(CCLayer* self);
 
-    CCLayer* create();
-
     void mem_init();
 }
 
