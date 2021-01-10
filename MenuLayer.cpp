@@ -14,6 +14,8 @@ bool __fastcall MenuLayer::initHook(CCLayer* self) {
 
 	auto btn = CCMenuItemSpriteExtra::create(sprite, sprite, self, menu_selector(MenuButton::btnCallback));
 
+	btn->setScale(1.1);
+
 	auto children = self->getChildren();
 
 	CCMenu* bottomMenu = (CCMenu*)children->objectAtIndex(3);
