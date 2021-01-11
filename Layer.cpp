@@ -15,7 +15,6 @@ void ChangeTextButton::callback(CCObject* pSender) {
 		btn->setNormalImage(sprite);
 		btn->setDisabledImage(sprite);
 
-		btn->stopAllActions();
 		btn->setScale(1);
 
 		ChangeTextButton::state = 1;
@@ -29,7 +28,6 @@ void ChangeTextButton::callback(CCObject* pSender) {
 		btn->setNormalImage(sprite);
 		btn->setDisabledImage(sprite);
 
-		btn->stopAllActions();
 		btn->setScale(1.25);
 
 		ChangeTextButton::state = 0;
