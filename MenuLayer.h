@@ -10,7 +10,7 @@ namespace MenuLayer {
     void mem_init();
 }
 
-class MenuButton {
+class MoveToNewLayerBtn : public CCMenuItemSpriteExtra {
 public:
-    void btnCallback(CCObject* pSender);
+    void callback(CCObject* pSender);
 };

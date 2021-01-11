@@ -2,23 +2,77 @@
 #include "MenuLayer.h"
 #include "CCDirectorModified.h"
 
+void ChangeTextButton::callback(CCObject* pSender) {
+	CCDirector* director = CCDirector::sharedDirector();
+	CCScene* scene = director->getRunningScene();
+	CCLayerGradient* layer = (CCLayerGradient*)scene->getChildByTag(0);
+	if (ChangeTextButton::state == 0) {
+		CCLabelBMFont* label = (CCLabelBMFont*)layer->getChildByTag(1);
+		label->setString("Joe mama! LOL XD");
+
+		ChangeTextButton* btn = (ChangeTextButton*)layer->getChildByTag(3)->getChildByTag(2);
+		auto sprite = CCSprite::createWithSpriteFrameName("GJ_updateBtn_001.png");
+		btn->setNormalImage(sprite);
+		btn->setDisabledImage(sprite);
+
+		btn->stopAllActions();
+		btn->setScale(1);
+
+		ChangeTextButton::state = 1;
+	}
+	else {
+		CCLabelBMFont* label = (CCLabelBMFont*)layer->getChildByTag(1);
+		label->setString("Who's joe?");
+
+		ChangeTextButton* btn = (ChangeTextButton*)layer->getChildByTag(3)->getChildByTag(2);
+		auto sprite = CCSprite::createWithSpriteFrameName("GJ_redoBtn_001.png");
+		btn->setNormalImage(sprite);
+		btn->setDisabledImage(sprite);
+
+		btn->stopAllActions();
+		btn->setScale(1.25);
+
+		ChangeTextButton::state = 0;
+	}
+}
+
 bool Layer::init() {
 	CCDirector* director = CCDirector::sharedDirector();
 	auto winSize = director->getWinSize();
 
-	auto label = CCLabelBMFont::create("Hello from my CCScene!", "bigFont.fnt");
+	this->setTag(0);
+
+	auto label = CCLabelBMFont::create("Who's joe?", "bigFont.fnt");
 	label->setPosition(winSize / 2);
+	label->setTag(1);
 
-	auto sprite = CCSprite::createWithSpriteFrameName("GJ_arrow_03_001.png");
-	auto btn = CCMenuItemSpriteExtra::create(sprite, sprite, this, menu_selector(Layer::returnToMenu));
+	auto sprite = CCSprite::createWithSpriteFrameName("GJ_redoBtn_001.png");
+	auto btn = ChangeTextButton::create(sprite, sprite, this, menu_selector(ChangeTextButton::callback));
+	btn->setTag(2);
+	btn->setScale(1.25);
 
-	btn->setPosition((-winSize.width / 2) + 25.0f, (winSize.height / 2) - 25.0f);
-	auto menu = CCMenu::createWithItem(btn);
+	auto btnSize = btn->getScaledContentSize();
+
+	btn->setPositionY(-btnSize.height / 2);
+	label->setPositionY((btnSize.height + winSize.height) / 2);
+	
+	ChangeTextButton::state = 0;
+
+	auto sprite2 = CCSprite::createWithSpriteFrameName("GJ_arrow_03_001.png");
+	auto retnbtn = CCMenuItemSpriteExtra::create(sprite2, sprite2, this, menu_selector(Layer::returnToMenu));
+
+	retnbtn->setPosition((-winSize.width / 2) + 25.0f, (winSize.height / 2) - 25.0f);
+	
+	auto menu = CCMenu::create();
+
+	menu->setTag(3);
+
+	menu->addChild(btn);
+	menu->addChild(retnbtn);
 	
 	addChild(menu, 2);
 	addChild(label);
 	
-
 	auto topLeft = CCSprite::createWithSpriteFrameName("GJ_sideArt_001.png");
 	auto bottomLeft = CCSprite::createWithSpriteFrameName("GJ_sideArt_001.png");
 	auto topRight = CCSprite::createWithSpriteFrameName("GJ_sideArt_001.png");

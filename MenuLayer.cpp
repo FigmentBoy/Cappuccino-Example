@@ -3,18 +3,23 @@
 #include "MinHook.h"
 #include <Windows.h>
 
-void MenuButton::btnCallback(CCObject* pSender) {
+void MoveToNewLayerBtn::callback(CCObject* pSender) {
 	Layer* layer = Layer::create();
+	CCMenuItemSpriteExtra* btn = (CCMenuItemSpriteExtra*)pSender;
+	btn->stopAllActions();
+	btn->setScale(1.1);
 }
 
 bool __fastcall MenuLayer::initHook(CCLayer* self) {
-	bool result = init(self);
+	
 
 	auto sprite = CCSprite::createWithSpriteFrameName("GJ_backBtn_001.png");
 
-	auto btn = CCMenuItemSpriteExtra::create(sprite, sprite, self, menu_selector(MenuButton::btnCallback));
+	auto btn = MoveToNewLayerBtn::create(sprite, sprite, self, menu_selector(MoveToNewLayerBtn::callback));
 
 	btn->setScale(1.1);
+
+	bool result = init(self);
 
 	auto children = self->getChildren();
 

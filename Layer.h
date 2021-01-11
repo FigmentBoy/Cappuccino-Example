@@ -11,3 +11,9 @@ public:
 	static Layer* create();
 	void returnToMenu(CCObject* sender);
 };
+
+class ChangeTextButton : public CCMenuItemSpriteExtra {
+public:
+	void callback(CCObject* pSender);
+	inline static int state;
+};
