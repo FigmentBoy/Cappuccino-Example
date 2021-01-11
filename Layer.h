@@ -2,7 +2,7 @@
 #include <cocos2d.h>
 using namespace cocos2d;
 
-class Layer : public CCLayer {
+class Layer : public CCLayerGradient {
 	Layer() = default;
 	bool init();
 
